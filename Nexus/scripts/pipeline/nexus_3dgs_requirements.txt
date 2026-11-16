@@ -1,0 +1,21 @@
+# Overlay for a Python 3.9 venv reusing Nexus Torch 2.3.0+cu121.
+# PyTorch3D 0.7.8 is installed separately from its official conda binary.
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.2
+scikit-image==0.24.0
+pandas==2.2.3
+pillow==10.4.0
+gsplat==1.3.0
+kornia==0.8.1
+open3d==0.19.0
+nerfview==0.1.3
+smplx==0.1.28
+diffrp-nvdiffrast==0.3.3.1
+splines==0.3.3
+plyfile==1.1.2
+pytorch-msssim==1.0.0
+lpips==0.1.4
+viser==1.0.10
+imageio-ffmpeg==0.6.0
+iopath==0.1.10

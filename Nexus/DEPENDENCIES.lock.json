@@ -1,0 +1,109 @@
+[
+  {
+    "path": ".",
+    "commit": "71c31ca848da94c969322a40f0f4ae2af8ca8129",
+    "remote": "https://github.com/OpenDriveLab/Nexus.git",
+    "tracked_worktree_changes": [
+      "M .gitignore",
+      " M README.md",
+      " M nuplan_extent/planning/training/modeling/models/diffusion/scenediffusion.py",
+      " M third_party/alf/alf/environments/_penv.cpython-39-x86_64-linux-gnu.so",
+      " M third_party/alf/setup.py"
+    ],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "Omniscenegraph",
+    "commit": "567cb6324c9cd4479d5022a3b54fec4c26cdc437",
+    "remote": "https://github.com/Max-luo-song/ADstudio.git",
+    "tracked_worktree_changes": [
+      "M datasets/base/pixel_source.py",
+      " M datasets/driving_dataset.py",
+      " M datasets/nuplan/nuplan_sourceloader.py",
+      " M logs/batch/pipeline_172.log",
+      " D logs/batch/pipeline_23.log",
+      " M logs/batch/pipeline_552.log",
+      " M logs/batch/pipeline_621.log",
+      " M logs/batch_drivestudio/logs/scene_172.log",
+      " D logs/batch_drivestudio/logs/scene_23.log",
+      " M logs/batch_drivestudio/logs/scene_552.log",
+      " M logs/batch_drivestudio/logs/scene_621.log",
+      " D logs/batch_drivestudio_kitti/pipeline_2011_09_26_drive_0018_sync.log",
+      " D logs/batch_drivestudio_kitti/pipeline_2011_09_26_drive_0029_sync.log",
+      " D logs/batch_drivestudio_kitti/pipeline_2011_09_26_drive_0084_sync.log",
+      " D logs/batch_drivestudio_kitti/pipeline_2011_09_26_drive_0091_sync.log",
+      " D logs/batch_kitti/pipeline_2011_09_26_drive_0029_sync.log",
+      " D logs/batch_kitti/pipeline_2011_09_26_drive_0091_sync.log",
+      " M logs/drivestudio_pipeline/scene_172.log",
+      " M logs/drivestudio_pipeline/scene_23.log",
+      " M logs/drivestudio_pipeline/scene_552.log",
+      " M logs/drivestudio_pipeline/scene_621.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0001_sync.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0018_sync.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0029_sync.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0059_sync.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0084_sync.log",
+      " D logs/drivestudio_pipeline_kitti/scene_2011_09_26_drive_0091_sync.log",
+      " D logs/drivestudio_render_novel_kitti/scene_2011_09_26_drive_0091_sync.log",
+      " M logs/pipeline/scene_172.log",
+      " D logs/pipeline/scene_23.log",
+      " M logs/pipeline/scene_552.log",
+      " M logs/pipeline/scene_621.log",
+      " D logs/pipeline_kitti/scene_2011_09_26_drive_0018_sync.log",
+      " D logs/pipeline_kitti/scene_2011_09_26_drive_0029_sync.log",
+      " D logs/pipeline_kitti/scene_2011_09_26_drive_0059_sync.log",
+      " D logs/pipeline_kitti/scene_2011_09_26_drive_0084_sync.log",
+      " D logs/pipeline_kitti/scene_2011_09_26_drive_0091_sync.log",
+      " M models/modules.py",
+      " M models/nodes/rigid.py",
+      " M models/trainers/base.py",
+      " M models/trainers/scene_graph.py",
+      " M models/trainers/single.py",
+      " M tools/eval.py",
+      " M tools/train.py"
+    ],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "third_party/gin-config",
+    "commit": "6757358b3faec531741cf138889031efa08fed1e",
+    "remote": "https://github.com/HorizonRobotics/gin-config.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "third_party/nuplan-devkit",
+    "commit": "e2aa9f34c6d129424a0d4c70f195c23c55a0666d",
+    "remote": "https://github.com/HorizonRobotics/nuplan-devkit.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "third_party/MTR",
+    "commit": "a5ba7bdafa09a1a355cc34f8a895499a2b14ddb3",
+    "remote": "https://github.com/sshaoshuai/MTR.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "Omniscenegraph/third_party/clean-fid",
+    "commit": "e88c4d6269a4bbf04c04deeb578475b57719acee",
+    "remote": "https://github.com/GaParmar/clean-fid.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "Omniscenegraph/third_party/GroundingDINO",
+    "commit": "856dde20aee659246248e20734ef9ba5214f5e44",
+    "remote": "https://github.com/IDEA-Research/GroundingDINO.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  },
+  {
+    "path": "Omniscenegraph/third_party/Depth-Anything-V2",
+    "commit": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+    "remote": "https://github.com/DepthAnything/Depth-Anything-V2.git",
+    "tracked_worktree_changes": [],
+    "source_snapshot_used_instead_of_gitlink": true
+  }
+]

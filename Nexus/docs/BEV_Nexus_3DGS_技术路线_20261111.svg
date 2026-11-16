@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 710" role="img" aria-label="BEV条件经Nexus交互生成并驱动三维高斯场景的技术路线">
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="none" stroke="#57718d" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="710" rx="18" fill="#f3f6fa"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" fill="#19334c">
+<text x="40" y="48" font-size="28" font-weight="bold">BEV条件驱动的交互场景生成与3DGS重演</text>
+<text x="40" y="79" font-size="17" fill="#5e7185">运动生成与三维外观分开建设，通过统一轨迹协议连接；当前实现基于nuPlan。</text>
+<g fill="#e5efff" stroke="#86a9dc" stroke-width="1.5">
+<rect x="35" y="120" width="230" height="130" rx="12"/><rect x="335" y="120" width="230" height="130" rx="12"/>
+<rect x="635" y="120" width="230" height="130" rx="12"/><rect x="935" y="120" width="230" height="130" rx="12"/>
+</g>
+<g font-size="21" font-weight="bold"><text x="55" y="152">上游BEV与事件</text><text x="355" y="152">条件编译</text><text x="655" y="152">Nexus＋物理引导</text><text x="955" y="152">轨迹与响应验收</text></g>
+<g font-size="17"><text x="55" y="184">地图、车辆ID、2秒历史</text><text x="55" y="211">动作对象、触发时刻</text><text x="55" y="237">栅格图需额外结构化</text>
+<text x="355" y="184">SceneTensor＋道路特征</text><text x="355" y="211">有效性与条件掩码分离</text><text x="355" y="237">编译事件车轨迹与意图</text>
+<text x="655" y="184">生成待预测的多车未来</text><text x="655" y="211">制动、跟车与变道约束</text><text x="655" y="237">必要时事件触发重规划</text>
+<text x="955" y="184">碰撞、路面、运动学</text><text x="955" y="211">是否实现预期交互</text><text x="955" y="237">冻结轨迹与来源记录</text></g>
+<g stroke="#57718d" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M267 185H326"/><path d="M567 185H626"/><path d="M867 185H926"/></g>
+<rect x="390" y="292" width="775" height="66" rx="10" fill="#fff3d5" stroke="#d9b451"/>
+<text x="413" y="319" font-size="19" font-weight="bold">统一轨迹协议</text><text x="413" y="344" font-size="17">ID、时间、XY/yaw/速度/尺寸、条件来源、坐标系、哈希；冻结后再渲染</text>
+<path d="M1050 252V282" stroke="#57718d" stroke-width="2" marker-end="url(#arrow)"/>
+<g fill="#e6f4ed" stroke="#82baa0" stroke-width="1.5"><rect x="35" y="399" width="280" height="176" rx="12"/><rect x="390" y="399" width="245" height="176" rx="12"/><rect x="700" y="399" width="215" height="176" rx="12"/><rect x="980" y="399" width="185" height="176" rx="12"/></g>
+<g font-size="21" font-weight="bold"><text x="55" y="433">三维背景与车辆资产</text><text x="410" y="433">轨迹 → 三维场景</text><text x="720" y="433">原生3DGS合成</text><text x="1000" y="433">下游交付</text></g>
+<g font-size="17"><text x="55" y="465">A：传感器数据重建原场景</text><text x="55" y="493">B：复用背景＋外部PLY</text><text x="55" y="521">外观不是由Nexus直接生成</text><text x="55" y="549">背景拓扑与观测覆盖需匹配</text>
+<text x="410" y="465">坐标变换、后轴/中心</text><text x="410" y="493">道路迁移、尺寸、地面</text><text x="410" y="521">逐帧对象位姿与相机</text><text x="410" y="549">迁移后重新检查资产框</text>
+<text x="720" y="465">背景＋动态车辆高斯</text><text x="720" y="493">三维深度与遮挡</text><text x="720" y="521">前视、后视、跟随</text><text x="720" y="549">视角变化不重采轨迹</text>
+<text x="1000" y="465">多视角视频</text><text x="1000" y="493">动态场景配置</text><text x="1000" y="521">资产与相机绑定</text><text x="1000" y="549">验收及复现报告</text></g>
+<g stroke="#57718d" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M317 487H381"/><path d="M637 487H691"/><path d="M917 487H971"/><path d="M510 360V390"/></g>
+<rect x="35" y="612" width="1130" height="67" rx="10" fill="#ffffff" stroke="#c8d4e0"/>
+<text x="55" y="639" font-size="18" font-weight="bold">当前能力边界</text><text x="55" y="666" font-size="17">任意BEV图片适配、完整自主决策、匹配任意道路的背景、持续感知控制闭环，仍需单独建设与验证。</text>
+</g></svg>

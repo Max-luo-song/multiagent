@@ -1,0 +1,132 @@
+import logging
+from pathlib import Path
+from typing import cast
+
+import pytorch_lightning as pl
+import pytorch_lightning.loggers
+import pytorch_lightning.plugins
+import torch
+from omegaconf import DictConfig, OmegaConf
+
+from nuplan.planning.script.builders.data_augmentation_builder import build_agent_augmentor
+from nuplan.planning.script.builders.objectives_builder import build_objectives
+from nuplan.planning.script.builders.scenario_builder import build_scenarios
+from nuplan.planning.script.builders.splitter_builder import build_splitter
+from nuplan.planning.script.builders.training_callback_builder import build_callbacks
+from nuplan.planning.script.builders.training_metrics_builder import build_training_metrics
+from nuplan.planning.script.builders.aggregated_metrics_builder import build_aggregated_metrics
+from nuplan.planning.script.builders.utils.utils_checkpoint import extract_last_checkpoint_from_experiment
+from nuplan.planning.training.data_loader.datamodule import DataModule
+from nuplan.planning.training.modeling.lightning_module_wrapper_closeloop import LightningModuleWrapperCloseloop
+from nuplan.planning.training.modeling.torch_module_wrapper import TorchModuleWrapper
+from nuplan.planning.training.preprocessing.feature_preprocessor import FeaturePreprocessor
+from nuplan.planning.utils.multithreading.worker_pool import WorkerPool
+
+logger = logging.getLogger(__name__)
+
+
+def build_lightning_datamodule(
+    cfg: DictConfig, worker: WorkerPool, model: TorchModuleWrapper
+) -> pl.LightningDataModule:
+    """
+    Build the lightning datamodule from the config.
+    :param cfg: Omegaconf dictionary.
+    :param model: NN model used for training.
+    :param worker: Worker to submit tasks which can be executed in parallel.
+    :return: Instantiated datamodule object.
+    """
+    # Build features and targets
+    feature_builders = model.get_list_of_required_feature()
+    target_builders = model.get_list_of_computed_target()
+
+    # Build splitter
+    splitter = build_splitter(cfg.splitter)
+
+    # Create feature preprocessor
+    feature_preprocessor = FeaturePreprocessor(
+        cache_path=cfg.cache.cache_path,
+        force_feature_computation=cfg.cache.force_feature_computation,
+        feature_builders=feature_builders,
+        target_builders=target_builders,
+        versatile_cache=cfg.cache.versatile_caching,
+    )
+
+    # Create data augmentation
+    augmentors = build_agent_augmentor(cfg.data_augmentation) if 'data_augmentation' in cfg else None
+    val_augmentors = build_agent_augmentor(cfg.val_data_augmentation) if 'val_data_augmentation' in cfg else None
+
+    # Build dataset scenarios
+    scenarios = build_scenarios(cfg, worker, model)
+
+    # Create datamodule
+    datamodule: pl.LightningDataModule = DataModule(
+        feature_preprocessor=feature_preprocessor,
+        splitter=splitter,
+        all_scenarios=scenarios,
+        dataloader_params=cfg.data_loader.params,
+        augmentors=augmentors,
+        val_augmentors=val_augmentors,
+        worker=worker,
+        scenario_type_sampling_weights=cfg.scenario_type_weights.scenario_type_sampling_weights,
+        **cfg.data_loader.datamodule,
+    )
+
+    return datamodule
+
+
+def build_lightning_module(cfg: DictConfig, torch_module_wrapper: TorchModuleWrapper) -> pl.LightningModule:
+    """
+    Builds the lightning module from the config.
+    :param cfg: omegaconf dictionary
+    :param torch_module_wrapper: NN model used for training
+    :return: built object.
+    """
+    # Build loss
+    objectives = build_objectives(cfg)
+
+    # Build metrics to evaluate the performance of predictions
+    metrics = build_training_metrics(cfg)
+    
+    # Build aggregated metrics to evaluate the performance of predictions
+    aggregated_metrics = build_aggregated_metrics(cfg) if "aggregated_metric" in cfg else {}
+
+    params = {
+        "model": torch_module_wrapper,
+        "objectives": objectives,
+        "metrics": metrics,
+        "aggregated_metrics": aggregated_metrics,
+        "batch_size": cfg.data_loader.params.batch_size,
+        "optimizer": cfg.optimizer,
+        "lr_scheduler": cfg.lr_scheduler if 'lr_scheduler' in cfg else None,
+        "warm_up_lr_scheduler": cfg.warm_up_lr_scheduler if 'warm_up_lr_scheduler' in cfg else None,
+        "objective_aggregate_mode": cfg.objective_aggregate_mode,
+    }
+
+    if cfg.checkpoint.ckpt_path is not None and not cfg.checkpoint.resume:
+        # If not resume training, checkpoint will be used as pre-train
+        caller = LightningModuleWrapperCloseloop.load_from_checkpoint
+        params.update({"checkpoint_path": cfg.checkpoint.ckpt_path, "strict": cfg.checkpoint.strict})
+    else:
+        caller = LightningModuleWrapperCloseloop
+    model = caller(**params)
+
+    return cast(pl.LightningModule, model)
+
+
+def build_trainer(cfg: DictConfig) -> pl.Trainer:
+    """
+    Builds the lightning trainer from the config.
+    :param cfg: omegaconf dictionary
+    :return: built object.
+    """
+    params = cfg.lightning.trainer.params
+
+    callbacks = build_callbacks(cfg)
+    del params.callbacks
+
+    trainer = pl.Trainer(
+        callbacks=callbacks,
+        **params,
+    )
+
+    return trainer
